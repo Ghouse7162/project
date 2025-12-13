@@ -15,6 +15,10 @@ import lollipopImg from "../assets/lollipop.jpg";
 import gummyImg from "../assets/gummy.jpg";
 
 function SweetsList() {
+  // 🔐 detect admin
+  const user = localStorage.getItem("user");
+  const isAdmin = user === "admin";
+
   const [sweets, setSweets] = useState([
     { id: 1, name: "Laddoo", price: 10, quantity: 20, image: laddooImg },
     { id: 2, name: "Kaju Katli", price: 15, quantity: 15, image: kajukatliImg },
@@ -30,11 +34,23 @@ function SweetsList() {
     { id: 12, name: "Gummy Bears", price: 3, quantity: 8, image: gummyImg },
   ]);
 
+  // purchase logic
   const handlePurchase = (id) => {
     setSweets((prev) =>
       prev.map((sweet) =>
         sweet.id === id && sweet.quantity > 0
           ? { ...sweet, quantity: sweet.quantity - 1 }
+          : sweet
+      )
+    );
+  };
+
+  // admin restock logic
+  const handleRestock = (id) => {
+    setSweets((prev) =>
+      prev.map((sweet) =>
+        sweet.id === id
+          ? { ...sweet, quantity: sweet.quantity + 5 }
           : sweet
       )
     );
@@ -47,9 +63,15 @@ function SweetsList() {
 
         return (
           <div className="sweet-card" key={sweet.id}>
-            <img src={sweet.image} alt={sweet.name} className="sweet-image" />
+            <img
+              src={sweet.image}
+              alt={sweet.name}
+              className="sweet-image"
+            />
 
-            {outOfStock && <span className="out-badge">Out of Stock</span>}
+            {outOfStock && (
+              <span className="out-badge">Out of Stock</span>
+            )}
 
             <div className="sweet-info">{sweet.name}</div>
 
@@ -64,6 +86,16 @@ function SweetsList() {
             >
               {outOfStock ? "Out of Stock" : "Purchase"}
             </button>
+
+            {/* 🔐 ADMIN ONLY */}
+            {isAdmin && (
+              <button
+                className="restock-btn"
+                onClick={() => handleRestock(sweet.id)}
+              >
+                Restock +5
+              </button>
+            )}
           </div>
         );
       })}
