@@ -1,0 +1,85 @@
+.sweets-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 columns */
+  gap: 20px;
+  padding: 20px;
+  justify-items: center;
+}
+
+.sweet-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+}
+
+.sweet-image {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.sweet-info {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 5px 0;
+}
+
+.sweet-name {
+  text-align: center;
+  font-weight: bold;
+  flex: 1;
+}
+
+.sweet-price {
+  font-weight: bold;
+  color: #ff5722;
+}
+
+.sweet-footer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+  margin-top: 5px;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+/* Container for the grid */
+.sweets-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 columns */
+  gap: 20px;
+  padding: 20px;
+
+  /* Center the grid horizontally */
+  justify-content: center;
+}
+
+/* Optional: add some spacing from the top */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
