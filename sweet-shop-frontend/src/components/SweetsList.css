@@ -1,29 +1,26 @@
+/* GRID CONTAINER */
 .sweets-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4 cards per row */
-  gap: 30px;
   width: 100%;
-  justify-items: center; /* center cards inside each cell */
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  justify-items: center;
 }
 
+/* CARD */
 .sweet-card {
+  width: 100%;
+  max-width: 220px;
   background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 15px;
-  width: 100%;
-  max-width: 220px; /* uniform card width */
-  box-sizing: border-box;
 }
 
-.sweet-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-}
-
+/* IMAGE */
 .sweet-image {
   width: 100%;
   height: 150px;
@@ -32,12 +29,14 @@
   margin-bottom: 10px;
 }
 
+/* NAME */
 .sweet-info {
   font-weight: bold;
   text-align: center;
   margin-bottom: 10px;
 }
 
+/* PRICE + QTY */
 .sweet-footer {
   display: flex;
   justify-content: space-between;
@@ -45,35 +44,54 @@
   margin-bottom: 10px;
 }
 
-.price {
-  font-weight: bold;
-  color: #ff5722;
-}
-
-.quantity {
-  font-weight: 500;
-}
-
+/* PURCHASE BUTTON */
 .sweet-card button {
+  width: 80%;
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
   background-color: #ff4d6d;
   color: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 8px;
-  cursor: pointer;
   font-weight: bold;
-  width: 80%;
-  text-align: center;
-  transition: background 0.3s ease, transform 0.2s ease;
+  cursor: pointer;
 }
 
 .sweet-card button:hover:enabled {
   background-color: #e6004c;
-  transform: translateY(-2px);
 }
 
 .sweet-card button:disabled {
   background-color: #ccc;
   cursor: not-allowed;
-  transform: none;
+}
+
+/* 📱 TABLET */
+@media (max-width: 1024px) {
+  .sweets-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* 📱 MOBILE */
+@media (max-width: 600px) {
+  .sweets-grid {
+    grid-template-columns: 1fr;
+  }
+}
+/* OUT OF STOCK BADGE */
+.out-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: crimson;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+/* Ensure card can position badge */
+.sweet-card {
+  position: relative;
 }

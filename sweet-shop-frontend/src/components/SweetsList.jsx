@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import './SweetsList.css';
+import "./SweetsList.css";
 
 import laddooImg from "../assets/laddoo.jpg";
 import kajukatliImg from "../assets/kajukatli.jpg";
@@ -42,22 +42,31 @@ function SweetsList() {
 
   return (
     <div className="sweets-grid">
-      {sweets.map((sweet) => (
-        <div className="sweet-card" key={sweet.id}>
-          <img src={sweet.image} alt={sweet.name} className="sweet-image" />
-          <div className="sweet-info">{sweet.name}</div>
-          <div className="sweet-footer">
-            <span className="price">${sweet.price}</span>
-            <span className="quantity">Qty: {sweet.quantity}</span>
+      {sweets.map((sweet) => {
+        const outOfStock = sweet.quantity === 0;
+
+        return (
+          <div className="sweet-card" key={sweet.id}>
+            <img src={sweet.image} alt={sweet.name} className="sweet-image" />
+
+            {outOfStock && <span className="out-badge">Out of Stock</span>}
+
+            <div className="sweet-info">{sweet.name}</div>
+
+            <div className="sweet-footer">
+              <span className="price">${sweet.price}</span>
+              <span className="quantity">Qty: {sweet.quantity}</span>
+            </div>
+
+            <button
+              disabled={outOfStock}
+              onClick={() => handlePurchase(sweet.id)}
+            >
+              {outOfStock ? "Out of Stock" : "Purchase"}
+            </button>
           </div>
-          <button
-            disabled={sweet.quantity === 0}
-            onClick={() => handlePurchase(sweet.id)}
-          >
-            Purchase
-          </button>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }
