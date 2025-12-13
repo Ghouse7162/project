@@ -1,33 +1,34 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import SweetsList from "../components/SweetsList.jsx";
-import "./Dashboard.css";
-
+import Navbar from "../components/Navbar";
+import SweetsList from "../components/SweetsList";
 function Dashboard({ onLogout }) {
   const navigate = useNavigate();
 
-  const handleLogoutClick = () => {
+  const handleLogout = () => {
     onLogout();
     navigate("/login");
   };
 
   return (
-    <div className="dashboard-bg">
-      <div className="dashboard-container">
-        <div className="dashboard-header">
-          <h1>Sweet Shop Dashboard</h1>
-          <button className="logout-button" onClick={handleLogoutClick}>
-            Logout
-          </button>
-        </div>
+    <>
+      <Navbar onLogout={handleLogout} />
 
-        <p className="dashboard-welcome">
-          Welcome! Browse and purchase your favorite sweets 🍬
-        </p>
+      <div
+        style={{
+          minHeight: "calc(100vh - 70px)",
+          backgroundColor: "#f7f7f7",
+          padding: "30px",
+          boxSizing: "border-box",
+        }}
+      >
+        <h2 style={{ textAlign: "center", marginBottom: "30px" }}>
+          Sweet Shop Dashboard
+        </h2>
 
         <SweetsList />
       </div>
-    </div>
+    </>
   );
 }
 

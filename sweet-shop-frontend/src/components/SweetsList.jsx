@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./SweetsList.css";
 
 import laddooImg from "../assets/laddoo.jpg";
@@ -14,27 +14,36 @@ import chocolateImg from "../assets/chocolate.jpg";
 import lollipopImg from "../assets/lollipop.jpg";
 import gummyImg from "../assets/gummy.jpg";
 
+const DEFAULT_SWEETS = [
+  { id: 1, name: "Laddoo", price: 10, quantity: 20, image: laddooImg },
+  { id: 2, name: "Kaju Katli", price: 15, quantity: 15, image: kajukatliImg },
+  { id: 3, name: "Basanti", price: 8, quantity: 10, image: basantiImg },
+  { id: 4, name: "Mysurpak", price: 12, quantity: 12, image: mysurpakImg },
+  { id: 5, name: "Pedda", price: 9, quantity: 14, image: peddaImg },
+  { id: 6, name: "Khalakhan", price: 20, quantity: 8, image: khalakhanImg },
+  { id: 7, name: "Jalebi", price: 6, quantity: 18, image: jalebiImg },
+  { id: 8, name: "Barfi", price: 11, quantity: 16, image: barfiImg },
+  { id: 9, name: "Rasgulla", price: 7, quantity: 20, image: rasgullaImg },
+  { id: 10, name: "Chocolate", price: 2, quantity: 10, image: chocolateImg },
+  { id: 11, name: "Lollipop", price: 1, quantity: 5, image: lollipopImg },
+  { id: 12, name: "Gummy Bears", price: 3, quantity: 8, image: gummyImg },
+];
+
 function SweetsList() {
-  // 🔐 detect admin
   const user = localStorage.getItem("user");
   const isAdmin = user === "admin";
 
-  const [sweets, setSweets] = useState([
-    { id: 1, name: "Laddoo", price: 10, quantity: 20, image: laddooImg },
-    { id: 2, name: "Kaju Katli", price: 15, quantity: 15, image: kajukatliImg },
-    { id: 3, name: "Basanti", price: 8, quantity: 10, image: basantiImg },
-    { id: 4, name: "Mysurpak", price: 12, quantity: 12, image: mysurpakImg },
-    { id: 5, name: "Pedda", price: 9, quantity: 14, image: peddaImg },
-    { id: 6, name: "Khalakhan", price: 20, quantity: 8, image: khalakhanImg },
-    { id: 7, name: "Jalebi", price: 6, quantity: 18, image: jalebiImg },
-    { id: 8, name: "Barfi", price: 11, quantity: 16, image: barfiImg },
-    { id: 9, name: "Rasgulla", price: 7, quantity: 20, image: rasgullaImg },
-    { id: 10, name: "Chocolate", price: 2, quantity: 10, image: chocolateImg },
-    { id: 11, name: "Lollipop", price: 1, quantity: 5, image: lollipopImg },
-    { id: 12, name: "Gummy Bears", price: 3, quantity: 8, image: gummyImg },
-  ]);
+  // 🔹 Load sweets from localStorage
+  const [sweets, setSweets] = useState(() => {
+    const stored = localStorage.getItem("sweets");
+    return stored ? JSON.parse(stored) : DEFAULT_SWEETS;
+  });
 
-  // purchase logic
+  // 🔹 Save sweets whenever state changes
+  useEffect(() => {
+    localStorage.setItem("sweets", JSON.stringify(sweets));
+  }, [sweets]);
+
   const handlePurchase = (id) => {
     setSweets((prev) =>
       prev.map((sweet) =>
@@ -45,7 +54,6 @@ function SweetsList() {
     );
   };
 
-  // admin restock logic
   const handleRestock = (id) => {
     setSweets((prev) =>
       prev.map((sweet) =>
@@ -69,9 +77,7 @@ function SweetsList() {
               className="sweet-image"
             />
 
-            {outOfStock && (
-              <span className="out-badge">Out of Stock</span>
-            )}
+            {outOfStock && <span className="out-badge">Out of Stock</span>}
 
             <div className="sweet-info">{sweet.name}</div>
 
@@ -87,7 +93,6 @@ function SweetsList() {
               {outOfStock ? "Out of Stock" : "Purchase"}
             </button>
 
-            {/* 🔐 ADMIN ONLY */}
             {isAdmin && (
               <button
                 className="restock-btn"
