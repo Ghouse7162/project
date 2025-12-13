@@ -15,6 +15,12 @@
   flex-direction: column;
   align-items: center;
   padding: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.sweet-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
 }
 
 .sweet-image {
@@ -50,36 +56,32 @@
   margin-top: 5px;
 }
 
-button {
-  background-color: #4CAF50;
+/* Purchase button styling like logout button */
+.sweet-card button {
+  background-color: #ff4d6d;
   color: white;
   border: none;
-  padding: 5px 10px;
-  border-radius: 5px;
+  padding: 8px 12px;
+  border-radius: 8px;
   cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
-button:disabled {
+.sweet-card button:hover:enabled {
+  background-color: #e6004c;
+  transform: translateY(-2px);
+}
+
+.sweet-card button:disabled {
   background-color: #ccc;
   cursor: not-allowed;
-}
-/* Container for the grid */
-.sweets-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4 columns */
-  gap: 20px;
-  padding: 20px;
-
-  /* Center the grid horizontally */
-  justify-content: center;
+  transform: none;
 }
 
-/* Optional: add some spacing from the top */
+/* Optional: page background */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
   background-color: #f9f9f9;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }

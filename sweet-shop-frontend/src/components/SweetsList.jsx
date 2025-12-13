@@ -11,7 +11,7 @@ import rasgullaImg from '../assets/rasgulla.jpg'
 import chocolateImg from '../assets/chocolate.jpg'
 import lollipopImg from '../assets/lollipop.jpg'
 import gummyImg from '../assets/gummy.jpg'
-import './SweetsList.css' // We'll create this CSS file next
+import './SweetsList.css'
 
 function SweetsList() {
   const [sweets, setSweets] = useState([
@@ -29,6 +29,17 @@ function SweetsList() {
     { id: 12, name: 'Gummy Bears', price: 3, quantity: 8, image: gummyImg },
   ])
 
+  // Handle purchase click
+  const handlePurchase = (id) => {
+    setSweets((prevSweets) =>
+      prevSweets.map((sweet) =>
+        sweet.id === id && sweet.quantity > 0
+          ? { ...sweet, quantity: sweet.quantity - 1 }
+          : sweet
+      )
+    )
+  }
+
   return (
     <div className="sweets-grid">
       {sweets.map((sweet) => (
@@ -40,7 +51,12 @@ function SweetsList() {
           </div>
           <div className="sweet-footer">
             <span>Quantity: {sweet.quantity}</span>
-            <button disabled={sweet.quantity === 0}>Purchase</button>
+            <button
+              disabled={sweet.quantity === 0}
+              onClick={() => handlePurchase(sweet.id)}
+            >
+              Purchase
+            </button>
           </div>
         </div>
       ))}
