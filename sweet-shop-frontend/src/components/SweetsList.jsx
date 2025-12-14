@@ -33,13 +33,13 @@ function SweetsList() {
   const user = localStorage.getItem("user");
   const isAdmin = user === "admin";
 
-  // 🔹 Load sweets from localStorage
+  // Load sweets from localStorage or default
   const [sweets, setSweets] = useState(() => {
     const stored = localStorage.getItem("sweets");
     return stored ? JSON.parse(stored) : DEFAULT_SWEETS;
   });
 
-  // 🔹 Save sweets whenever state changes
+  // Save sweets state to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem("sweets", JSON.stringify(sweets));
   }, [sweets]);
@@ -57,9 +57,7 @@ function SweetsList() {
   const handleRestock = (id) => {
     setSweets((prev) =>
       prev.map((sweet) =>
-        sweet.id === id
-          ? { ...sweet, quantity: sweet.quantity + 5 }
-          : sweet
+        sweet.id === id ? { ...sweet, quantity: sweet.quantity + 5 } : sweet
       )
     );
   };
@@ -71,11 +69,7 @@ function SweetsList() {
 
         return (
           <div className="sweet-card" key={sweet.id}>
-            <img
-              src={sweet.image}
-              alt={sweet.name}
-              className="sweet-image"
-            />
+            <img src={sweet.image} alt={sweet.name} className="sweet-image" />
 
             {outOfStock && <span className="out-badge">Out of Stock</span>}
 
@@ -87,6 +81,7 @@ function SweetsList() {
             </div>
 
             <button
+              className="purchase-btn"
               disabled={outOfStock}
               onClick={() => handlePurchase(sweet.id)}
             >
